@@ -1,0 +1,111 @@
+{
+    "folders": [
+        {
+            "name": "Inna Management",
+            "path": "."
+        },
+        {
+            "name": "Configs",
+            "path": "./configs"
+        },
+        {
+            "name": "Scripts",
+            "path": "./scripts"
+        },
+        {
+            "name": "Backups",
+            "path": "./backups"
+        }
+    ],
+    "settings": {
+        "files.associations": {
+            "*.json": "json"
+        },
+        "json.schemas": [
+            {
+                "fileMatch": ["configs/*.json"],
+                "url": "https://json.schemastore.org/json"
+            }
+        ],
+        "terminal.integrated.defaultProfile.osx": "zsh",
+        "terminal.integrated.cwd": "${workspaceFolder}",
+        "files.exclude": {
+            "backups/inna-*-*.sql": false,
+            "backups/inna-*-*.json": false
+        }
+    },
+    "tasks": {
+        "version": "2.0.0",
+        "tasks": [
+            {
+                "label": "View Inna Config",
+                "type": "shell",
+                "command": "./scripts/inna-manager.sh",
+                "args": ["view"],
+                "group": "build",
+                "presentation": {
+                    "echo": true,
+                    "reveal": "always",
+                    "focus": false,
+                    "panel": "shared"
+                }
+            },
+            {
+                "label": "Backup Inna",
+                "type": "shell",
+                "command": "./scripts/inna-manager.sh",
+                "args": ["backup"],
+                "group": "build",
+                "presentation": {
+                    "echo": true,
+                    "reveal": "always",
+                    "focus": false,
+                    "panel": "shared"
+                }
+            },
+            {
+                "label": "Update Inna",
+                "type": "shell",
+                "command": "./scripts/inna-manager.sh",
+                "args": ["update"],
+                "group": "build",
+                "presentation": {
+                    "echo": true,
+                    "reveal": "always",
+                    "focus": false,
+                    "panel": "shared"
+                }
+            },
+            {
+                "label": "Edit Inna Config",
+                "type": "shell",
+                "command": "./scripts/inna-manager.sh",
+                "args": ["edit"],
+                "group": "build",
+                "presentation": {
+                    "echo": true,
+                    "reveal": "always",
+                    "focus": false,
+                    "panel": "shared"
+                }
+            },
+            {
+                "label": "Inna Status",
+                "type": "shell",
+                "command": "./scripts/inna-manager.sh",
+                "args": ["status"],
+                "group": "build",
+                "presentation": {
+                    "echo": true,
+                    "reveal": "always",
+                    "focus": false,
+                    "panel": "shared"
+                }
+            }
+        ]
+    },
+    "launch": {
+        "version": "0.2.0",
+        "configurations": []
+    }
+}

@@ -1,0 +1,34 @@
+{
+    "profile_image_url": "/static/favicon.png",
+    "description": "Product innovation specialist",
+    "capabilities": {
+        "vision": true,
+        "file_upload": true,
+        "web_search": false,
+        "image_generation": false,
+        "code_interpreter": true,
+        "citations": false,
+        "status_updates": false
+    },
+    "suggestion_prompts": [
+        {
+            "content": "I have an idea!"
+        },
+        {
+            "content": "I have a problem."
+        },
+        {
+            "content": "I want to make something better."
+        },
+        {
+            "content": "I want to make something new."
+        },
+        {
+            "content": "Can you help me with something?"
+        }
+    ],
+    "tags": [],
+            "toolIds": [
+                "step3_finalize_and_pipeline_clone"
+            ]
+}

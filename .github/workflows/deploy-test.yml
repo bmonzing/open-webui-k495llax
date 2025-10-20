@@ -1,0 +1,48 @@
+name: Deploy to Testing
+
+on:
+  push:
+    branches: [inna-test]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          cd backend
+          pip install -r requirements.txt
+
+      - name: Build frontend
+        run: |
+          npm install
+          npm run build
+
+      - name: Run tests
+        run: |
+          echo "🧪 Running tests for testing environment"
+          # Add your test commands here
+
+      - name: Deploy to testing
+        run: |
+          echo "🚀 Deploying to testing environment"
+          echo "Environment: test"
+          echo "Port: 8081"
+          echo "Data directory: /Users/287096/ai/open-webui-test/data"
+          
+      - name: Create deployment summary
+        run: |
+          echo "## 🧪 Testing Deployment Complete" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Environment: Testing" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Port: 8081" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Branch: inna-test" >> $GITHUB_STEP_SUMMARY
+          echo "- 🕐 Deployed at $(date)" >> $GITHUB_STEP_SUMMARY

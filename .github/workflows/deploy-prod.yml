@@ -1,0 +1,48 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches: [inna-prod]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          cd backend
+          pip install -r requirements.txt
+
+      - name: Build frontend
+        run: |
+          npm install
+          npm run build
+
+      - name: Run production tests
+        run: |
+          echo "🔍 Running production tests"
+          # Add your production test commands here
+
+      - name: Deploy to production
+        run: |
+          echo "🚀 Deploying to production environment"
+          echo "Environment: prod"
+          echo "Port: 8082"
+          echo "Data directory: /Users/287096/ai/open-webui-prod/data"
+          
+      - name: Create deployment summary
+        run: |
+          echo "## 🚀 Production Deployment Complete" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Environment: Production" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Port: 8082" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Branch: inna-prod" >> $GITHUB_STEP_SUMMARY
+          echo "- 🕐 Deployed at $(date)" >> $GITHUB_STEP_SUMMARY

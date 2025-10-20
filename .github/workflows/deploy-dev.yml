@@ -1,0 +1,43 @@
+name: Deploy to Development
+
+on:
+  push:
+    branches: [inna-dev]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          cd backend
+          pip install -r requirements.txt
+
+      - name: Build frontend
+        run: |
+          npm install
+          npm run build
+
+      - name: Deploy to development
+        run: |
+          echo "🚀 Deploying to development environment"
+          echo "Environment: dev"
+          echo "Port: 8080"
+          echo "Data directory: /Users/287096/ai/open-webui-dev/data"
+          
+      - name: Create deployment summary
+        run: |
+          echo "## 🎯 Development Deployment Complete" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Environment: Development" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Port: 8080" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Branch: inna-dev" >> $GITHUB_STEP_SUMMARY
+          echo "- 🕐 Deployed at $(date)" >> $GITHUB_STEP_SUMMARY

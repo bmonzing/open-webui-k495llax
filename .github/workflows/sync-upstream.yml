@@ -1,0 +1,51 @@
+name: Sync with Upstream Open WebUI
+
+on:
+  schedule:
+    - cron: '0 2 * * 1'  # Weekly on Monday at 2 AM
+  workflow_dispatch:      # Manual trigger
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "actions@github.com"
+
+      - name: Add upstream remote
+        run: |
+          git remote add upstream https://github.com/open-webui/open-webui.git || true
+
+      - name: Fetch upstream
+        run: |
+          git fetch upstream
+
+      - name: Sync main branch
+        run: |
+          git checkout main
+          git merge upstream/main
+          git push origin main
+
+      - name: Update environment branches
+        run: |
+          for branch in inna-dev inna-test inna-prod; do
+            git checkout $branch
+            git merge main
+            git push origin $branch
+          done
+
+      - name: Create sync summary
+        run: |
+          echo "## 🔄 Upstream Sync Complete" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Synced with upstream Open WebUI" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Updated main branch" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Updated environment branches" >> $GITHUB_STEP_SUMMARY
+          echo "- 🕐 Sync completed at $(date)" >> $GITHUB_STEP_SUMMARY
